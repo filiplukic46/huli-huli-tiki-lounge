@@ -1,0 +1,307 @@
+---
+import { u } from '../lib/url';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Btn from '../components/Btn.astro';
+import Skulls from '../components/Skulls.astro';
+import { site, lineup, orderList, reviews } from '../data/site';
+import { photo } from '../data/photos';
+import octoMug from '../assets/octo-mug.png';
+
+const gallery = ['g-hut', 'g-redbar', 'g-sign', 'g-booths', 'g-parrot', 'g-jungle', 'g-bar', 'g-hall'];
+const galleryAlt: Record<string, string> = {
+  'g-hut': 'A thatched hut bar glowing green, skulls on the counter and a Huli Huli sign',
+  'g-redbar': 'The long bar under red light with carved masks at the far end',
+  'g-sign': 'The Huli Huli pineapple sign over a row of tiki mugs on a shelf',
+  'g-booths': 'Booths along the window under green and purple light',
+  'g-parrot': 'A carved parrot hanging over the bar shelves in red and blue light',
+  'g-jungle': 'Hanging lamps and plants over the booths by the windows',
+  'g-bar': 'The back bar shelves lined with rum bottles and lanterns',
+  'g-hall': 'The entrance hall with surfboards and framed prints',
+};
+---
+<Base page="home">
+  <!-- 1. Hero: one poster. The name across the top, the Octoskull lit in front, a marquee cutting it off. -->
+  <section class="hero" aria-labelledby="hero-title" data-hero>
+    <svg width="0" height="0" class="hero__defs" aria-hidden="true"><defs><g id="pine"><path d="M32 12c3 4 7 5 10 4-1 4-4 6-6 7 4 1 8 4 8 10 0 9-6 19-12 19S20 42 20 33c0-6 4-9 8-10-2-1-5-3-6-7 3 1 7 0 10-4z" fill="#ffc530" stroke="#2b140b" stroke-width="3" stroke-linejoin="round"/><path d="M25 32l14 10M39 32L25 42M32 26v22" stroke="#2b140b" stroke-width="2.4"/></g></defs></svg>
+    <div class="hero__name">
+      <h1 id="hero-title" class="sr-only">Huli Huli, tiki lounge in Powell, Ohio</h1>
+      <svg class="hero__word" data-hero-word viewBox="0 0 1000 240" aria-hidden="true">
+        <text class="hero__shade" x="22" y="212" textLength="964" lengthAdjust="spacingAndGlyphs">HULI HULI</text>
+        <text class="hero__face" x="6" y="196" textLength="964" lengthAdjust="spacingAndGlyphs">HULI HULI</text>
+      </svg>
+    </div>
+    <div class="hero__labels">
+      <p class="hero__label">Tiki lounge in Powell, Ohio<span class="hero__hours"><span class="dot" aria-hidden="true"></span><span data-open-now>Tuesday to Sunday, from 1 pm on weekends</span></span></p>
+      <p class="hero__label hero__label--r">Drinks lit at your table</p>
+    </div>
+    <div class="hero__mug" data-hero-mug>
+      <Image class="hero__cut" quality={72} src={octoMug} alt="The green Octoskull tiki mug with HULI on its forehead, a pineapple crown, an orchid and a lime" widths={[360, 540, 760, 900]} sizes="(max-width: 767px) 58vw, 32vw" loading="eager" fetchpriority="high" format="webp" data-critical />
+      <a class="sticker" href="#mugs">
+        <span class="sticker__in">
+          <span class="sticker__face sticker__front">
+            <span class="sticker__big">$45</span>
+            <span class="sticker__small">Octoskull mug, yours to keep</span>
+          </span>
+          <span class="sticker__face sticker__back">
+            <span class="sticker__small">Any drink in&nbsp;it</span>
+            <span class="sticker__go">See the mugs</span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <div class="hero__band" data-marquee role="region" aria-label="What we pour and serve">
+      <div class="hero__run" data-track>
+        <p class="hero__set"><span>Flaming cocktails</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg><span>Take the mug home</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg><span>Pupu platters</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg><span>Patio bar</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg><span>Open till 11 on weekends</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg><span>House-made syrups</span><svg viewBox="16 8 32 48" aria-hidden="true"><use href="#pine" /></svg></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Fire: full-bleed media -->
+  <section class="fire" id="fire" aria-labelledby="fire-title">
+    <div class="fire__media">
+      <div class="fire__img" data-parallax="0.08">
+        <Image quality={66} src={photo('fire-bar')} alt="The long bar at night, red light under the counter and carved masks at the far end" widths={[800, 1400, 2000]} sizes="100vw" />
+      </div>
+    </div>
+    <div class="fire__copy">
+      <p class="label label--sun">The show</p>
+      <h2 id="fire-title" class="display" data-split="lines">Order one and the whole room turns around</h2>
+      <p class="fire__text" data-reveal="up">The bartender lights a rum-soaked lime shell, throws cinnamon into the flame and sends the drink to your table still burning. Sit at the bar if you want the front row.</p>
+    </div>
+  </section>
+
+  <!-- 3. The lineup: signature, sticky stage -->
+  <section class="lineup" id="drinks" aria-labelledby="lineup-title" data-lineup>
+    <div class="lineup__stage">
+      <div class="lineup__head">
+        <h2 id="lineup-title" class="display">The house drinks</h2>
+        <p class="lineup__hint">
+          <span class="only-pointer">Keep scrolling. Each glass turns over to show what is in it.</span>
+          <span class="only-touch">Tap a glass to turn it over and see what is in it.</span>
+        </p>
+      </div>
+      <ol class="lineup__row">
+        {lineup.map((d, i) => (
+          <li class="lineup__item" style={`--i:${i}`}>
+            <div class="sway" data-sway={i === 0 ? '' : undefined}>
+              <button class="turn" type="button" aria-pressed="false" data-turn data-i={i}>
+                <span class="turn__face turn__front">
+                  <Image quality={66} src={photo(d.photo!)} alt={`${d.name} cocktail on the bar`} widths={[360, 560, 800]} sizes="(max-width: 767px) 72vw, 22vw" />
+                  <span class="turn__name">{d.name}</span>
+                </span>
+                <span class="turn__face turn__back">
+                  <span class="turn__top"><span class="turn__no">0{i + 1}</span><Skulls n={d.strength} /></span>
+                  <span class="turn__title">{d.name}</span>
+                  <span class="turn__spec">{d.spec}</span>
+                  <span class="turn__price">{d.price}</span>
+                </span>
+                <span class="sr-only">Turn over</span>
+              </button>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="lineup__foot">
+        <p>Twelve cocktails on the card, from the 1934 Zombie to drinks we wrote ourselves. Every syrup is made in-house.</p>
+        <Btn href={u('/menu/#drinks')} label="See every cocktail" kind="ink" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Mugs and masks: gallery wall -->
+  <section class="mugs" id="mugs" aria-labelledby="mugs-title">
+    <div class="tapa tapa--sun" aria-hidden="true"></div>
+    <div class="mugs__grid">
+      <div class="mugs__intro">
+        <h2 id="mugs-title" class="display" data-split="lines">Mugs, masks and a moai</h2>
+        <p data-reveal="up">Most drinks here skip the plain glass. They show up in tiki gods, sugar skulls and carved barrels. Masks line the back bar, the thatched huts glow green and red, and a stone moai keeps watch inside.</p>
+      </div>
+      <figure class="wall wall--a tilt" data-reveal="clip"><Image quality={66} src={photo('mug-monkey')} alt="A cocktail in a carved monkey tiki mug with an orchid and an orange slice" widths={[400, 700]} sizes="(max-width: 767px) 60vw, 26vw" /></figure>
+      <figure class="wall wall--b tilt" data-reveal="clip" data-delay="0.1"><Image quality={66} src={photo('mask-wall')} alt="Carved tiki masks hanging under a Huli Huli sign" widths={[500, 900]} sizes="(max-width: 767px) 92vw, 34vw" /></figure>
+      <figure class="wall wall--c tilt" data-reveal="clip" data-delay="0.15"><Image quality={66} src={photo('mug-skull')} alt="A painted sugar skull mug on the bar top" widths={[400, 800]} sizes="(max-width: 767px) 60vw, 24vw" /></figure>
+      <figure class="wall wall--d tilt" data-reveal="clip" data-delay="0.2"><Image quality={66} src={photo('moai-inside')} alt="A stone moai beside a booth in green and red light" widths={[500, 900]} sizes="(max-width: 767px) 92vw, 30vw" /></figure>
+      <div class="octo">
+        <p class="octo__num"><span>$45</span></p>
+        <p class="octo__text"><strong>The Octoskull mug.</strong> Order any drink in it and the mug goes home with you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Story: statement -->
+  <section class="story" id="story" aria-labelledby="story-title">
+    <div class="story__grid">
+      <h2 id="story-title" class="label">Our story</h2>
+      <p class="story__statement" data-split="lines">In 2019 an antique shop on Olentangy Street traded its shelves for bamboo, thatch and a long bar.</p>
+      <div class="story__body" data-reveal="up">
+        <p>Founder Dustin Sun grew up in his family’s tiki bar and wanted Central Ohio to have one of its own, with an Asian twist. Rick Ryan joined in 2021 and brought years of restaurant and bar work with him.</p>
+        <p>We make the syrups and mixers in-house. The kitchen cooks from Asian, Polynesian and American traditions. Start with a Mai Tai and let the pupu platter take it from there.</p>
+      </div>
+      <figure class="story__photo tilt" data-reveal="clip"><Image quality={66} src={photo('front-moai')} alt="The stone moai at the front gate with the covered patio bar behind it" widths={[500, 900, 1200]} sizes="(max-width: 767px) 92vw, 30vw" /></figure>
+    </div>
+  </section>
+
+  <!-- 6. Order online: index list with preview -->
+  <section class="order" id="order" aria-labelledby="order-title">
+    <div class="order__grid">
+      <div class="order__intro">
+        <h2 id="order-title" class="display" data-split="lines">Take the kitchen home</h2>
+        <p data-reveal="up">Bang Bang Broccoli travels well, and so do the coconut shrimp, the wings and the pupu platter. Order ahead and pick it up hot.</p>
+        <div class="order__actions" data-reveal="up">
+          <Btn href={site.orderUrl} label="Order online" kind="fire" ext />
+          <Btn href={u('/menu/#food')} label="Food menu" kind="cream" />
+        </div>
+      </div>
+      <ul class="index" data-index>
+        {orderList.map((d) => (
+          <li>
+            <a href={site.orderUrl} rel="noopener" data-preview={d.photo}>
+              <span class="index__thumb"><Image quality={66} src={photo(d.photo!)} alt="" widths={[200, 400]} sizes="96px" /></span>
+              <span class="index__name">{d.name.replace(/, (\d+)$/, ', $1')}</span>
+              <span class="index__note">{d.note}</span>
+              <span class="index__price">{d.price}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="preview" aria-hidden="true">
+      {orderList.map((d) => (<Image quality={66} src={photo(d.photo!)} alt="" widths={[500, 800]} sizes="26vw" data-preview-img={d.photo} />))}
+    </div>
+  </section>
+
+  <!-- 7. Patio: asymmetric pair -->
+  <section class="patio" id="patio" aria-labelledby="patio-title">
+    <div class="patio__grid">
+      <figure class="patio__big tilt" data-reveal="clip"><Image quality={66} src={photo('patio-night')} alt="The patio bar at night under red light, lanterns and a candle on the counter" widths={[600, 1000, 1400]} sizes="(max-width: 767px) 92vw, 50vw" /></figure>
+      <div class="patio__copy">
+        <h2 id="patio-title" class="display" data-split="lines">The patio bar</h2>
+        <p data-reveal="up">A covered bar with red light under the counter, heaters for cooler nights and the moai standing guard at the gate. When the weather is good, this is the seat to get.</p>
+      </div>
+      <figure class="patio__small tilt" data-reveal="clip" data-delay="0.15"><Image quality={66} src={photo('patio-bar')} alt="The covered patio bar in daylight with a row of stools" widths={[500, 900]} sizes="(max-width: 767px) 70vw, 30vw" /></figure>
+    </div>
+  </section>
+
+  <!-- 8. Parties and catering: two stacked bands -->
+  <section class="band band--parties" id="parties" aria-labelledby="parties-title">
+    <div class="band__grid">
+      <figure class="band__photo tilt"><Image quality={66} src={photo('party-table')} alt="Three friends laughing over drinks and plates by candlelight" widths={[600, 1000, 1400]} sizes="(max-width: 767px) 92vw, 46vw" /></figure>
+      <div class="band__copy">
+        <p class="label">Private parties</p>
+        <h2 id="parties-title" class="display" data-split="lines">Your party, our huts</h2>
+        <p data-reveal="up">Birthdays, work outings, the night your best friend finally gets engaged. We set your table with flaming drinks and pupu platters and keep the rounds coming. For 15 guests or more, tell us the date and we plan it together.</p>
+        <div data-reveal="up"><Btn href="#reserve" label="Plan a party" kind="ink" attrs={{ 'data-book': 'party' }} /></div>
+      </div>
+    </div>
+  </section>
+  <section class="band band--catering" id="catering" aria-labelledby="catering-title">
+    <div class="band__grid band__grid--flip">
+      <figure class="band__photo tilt"><Image quality={66} src={photo('catering-spread')} alt="A table spread with wings, pupu platter, coconut shrimp and bowls" widths={[600, 1000, 1400]} sizes="(max-width: 767px) 92vw, 46vw" /></figure>
+      <div class="band__copy">
+        <p class="label">Catering</p>
+        <h2 id="catering-title" class="display" data-split="lines">The pupu platter, by the tray</h2>
+        <p data-reveal="up">Wings, pupu platters, Bang Bang Broccoli and Hawaiian bowls, cooked in our kitchen and packed for your office lunch or backyard party. Send us the date and the headcount, and we build the spread.</p>
+        <div data-reveal="up"><Btn href="#reserve" label="Ask about catering" kind="ink" attrs={{ 'data-book': 'catering' }} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Reservations: form -->
+  <section class="reserve" id="reserve" aria-labelledby="reserve-title">
+    <div class="reserve__grid">
+      <div class="reserve__intro">
+        <h2 id="reserve-title" class="display" data-split="lines">Save us a hut</h2>
+        <ul class="rules">
+          <li><strong>Sunday and Tuesday to Thursday:</strong> any group size can book.</li>
+          <li><strong>Friday and Saturday:</strong> we book groups of 5 or more.</li>
+          <li><strong>No booking?</strong> Walk in, we seat first come, first served.</li>
+          <li><strong>Groups of 6 or more:</strong> 20% gratuity is added to the bill.</li>
+        </ul>
+      </div>
+      <form class="form" data-book-form novalidate>
+        <fieldset class="form__type">
+          <legend class="label">What are we planning?</legend>
+          <label><input type="radio" name="type" value="table" checked /> <span>A table</span></label>
+          <label><input type="radio" name="type" value="party" /> <span>A private party</span></label>
+          <label><input type="radio" name="type" value="catering" /> <span>Catering</span></label>
+        </fieldset>
+        <div class="form__row">
+          <label class="field"><span>Name</span><input name="name" autocomplete="name" required /></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required /></label>
+        </div>
+        <div class="form__row form__row--3">
+          <label class="field"><span>Date</span><input name="date" type="date" required /></label>
+          <label class="field"><span>Time</span><input name="time" type="time" min="13:00" max="22:30" required /></label>
+          <label class="field"><span>Guests</span><input name="guests" type="number" min="1" max="200" inputmode="numeric" required /></label>
+        </div>
+        <label class="field"><span>Anything we should know?</span><textarea name="notes" rows="3"></textarea></label>
+        <div class="form__foot">
+          <button class="btn btn--fire btn--md" type="submit"><span class="btn__fill" aria-hidden="true"></span><span class="btn__label"><span class="btn__a">Send request</span><span class="btn__b" aria-hidden="true">Send request</span></span></button>
+          <p class="form__status" role="status" data-form-status></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- 10. Reviews -->
+  <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="reviews__grid">
+      <div class="rating">
+        <p class="rating__num">{site.rating.score}</p>
+        <h2 id="reviews-title" class="rating__label">stars from {site.rating.count} Google reviews</h2>
+      </div>
+      <figure class="quote quote--big" data-reveal="up">
+        <blockquote><p>{reviews[0].text}</p></blockquote>
+        <figcaption>{reviews[0].name}, Google</figcaption>
+      </figure>
+      <ul class="quotes">
+        {reviews.slice(1).map((r, i) => (
+          <li>
+            <figure class="quote"><blockquote><p>{r.text}</p></blockquote><figcaption>{r.name}, Google</figcaption></figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11. Gallery: filmstrip -->
+  <section class="strip" id="gallery" aria-labelledby="gallery-title">
+    <div class="strip__head">
+      <h2 id="gallery-title" class="display">Inside the lounge</h2>
+      <a class="link" href={site.instagram} rel="noopener">More on Instagram</a>
+    </div>
+    <div class="strip__viewport" data-marquee tabindex="0" role="region" aria-label="Photos of the lounge">
+      <ul class="strip__track" data-track>
+        {gallery.map((g) => (<li><Image quality={66} src={photo(g)} alt={galleryAlt[g]} widths={[480, 800]} sizes="(max-width: 767px) 70vw, 30vw" /></li>))}
+        {gallery.map((g) => (<li aria-hidden="true"><Image quality={66} src={photo(g)} alt="" widths={[480, 800]} sizes="(max-width: 767px) 70vw, 30vw" /></li>))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12. Visit and newsletter -->
+  <section class="visit" id="visit" aria-labelledby="visit-title">
+    <div class="visit__grid">
+      <div class="visit__where">
+        <h2 id="visit-title" class="display" data-split="lines">Come find the moai</h2>
+        <address>{site.address.street}<br />Downtown Powell, Ohio {site.address.zip}</address>
+        <div class="visit__actions"><Btn href={site.mapUrl} label="Get directions" kind="sun" ext /></div>
+      </div>
+      <table class="hours">
+        <caption class="label">Opening hours</caption>
+        <tbody>
+          {site.hours.map((h) => (<tr data-day={h.short}><th scope="row">{h.days}</th><td>{h.time}</td></tr>))}
+        </tbody>
+      </table>
+      <form class="news" data-news-form novalidate>
+        <h3 class="label">The Huli Huli letter</h3>
+        <p>One email when a new menu drops or we plan a night worth leaving the house for.</p>
+        <div class="news__row">
+          <label class="sr-only" for="news-email">Email</label>
+          <input id="news-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+          <button class="btn btn--sun btn--md" type="submit"><span class="btn__fill" aria-hidden="true"></span><span class="btn__label"><span class="btn__a">Sign up</span><span class="btn__b" aria-hidden="true">Sign up</span></span></button>
+        </div>
+        <p class="form__status" role="status" data-news-status></p>
+      </form>
+    </div>
+  </section>
+</Base>

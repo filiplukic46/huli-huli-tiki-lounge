@@ -1,0 +1,52 @@
+@font-face { font-family: 'Luckiest Guy'; src: url('/fonts/luckiest-guy-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Oswald'; src: url('/fonts/oswald-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Oswald'; src: url('/fonts/oswald-600-normal.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  /* Palette from the client's printed menus and logo */
+  --lagoon: #1e8c9e;
+  --lagoon-deep: #0f4f5a;
+  --sunset: #f26a1b;
+  --sunset-deep: #a8380a;
+  --sun: #ffc530;
+  --cream: #fff0d4;
+  --ink: #2b140b;
+  --hibiscus: #e8407a;
+  --hibiscus-deep: #9c1f4c;
+
+  /* Engine contract */
+  --c-bg: var(--cream);
+  --c-fg: var(--ink);
+  --c-muted: #6b4a38;
+  --c-line: rgb(43 20 11 / 0.16);
+  --c-accent: var(--sunset-deep);
+  --c-curtain: var(--sunset);
+
+  --f-display: 'Luckiest Guy', 'Arial Black', system-ui, sans-serif;
+  --f-label: 'Oswald', 'Arial Narrow', system-ui, sans-serif;
+  --f-body: 'DM Sans', system-ui, sans-serif;
+
+  --t-mega: clamp(4.2rem, 1rem + 13.5vw, 15rem);
+  --t-xl: clamp(2.9rem, 1.4rem + 5.4vw, 7rem);
+  --t-l: clamp(2rem, 1.3rem + 2.6vw, 3.75rem);
+  --t-m: clamp(1.3rem, 1.1rem + 0.8vw, 1.85rem);
+  --t-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --t-s: 0.9375rem;
+  --t-xs: 0.8125rem;
+
+  --u: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+  --radius: 18px;
+  --line-w: 3px;
+
+  --z-gl: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}

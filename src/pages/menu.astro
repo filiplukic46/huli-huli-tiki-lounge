@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Btn from '../components/Btn.astro';
+import Skulls from '../components/Skulls.astro';
+import { site, legends, legacies, starters, casual, plate } from '../data/site';
+import { photo } from '../data/photos';
+---
+<Base page="menu" title="Cocktail and food menu" description="The full Huli Huli menu: tiki legends like the Mai Tai and the 1934 Zombie, house cocktails, Bang Bang Broccoli, pupu platters, Hawaiian plates and prices.">
+  <section class="mhero" aria-labelledby="menu-title">
+    <figure class="mhero__art" aria-hidden="true"><Image quality={66} src={photo('menu-drinks')} alt="" widths={[400, 700]} sizes="30vw" loading="eager" /></figure>
+    <h1 id="menu-title" data-split="lines" data-intro>The menu</h1>
+    <p>Twelve tiki cocktails, from the 1934 Zombie to drinks we wrote ourselves, and a kitchen that cooks from Asian, Polynesian and American traditions.</p>
+    <div class="mhero__jump">
+      <Btn href="#drinks" label="Cocktails" kind="sun" />
+      <Btn href="#food" label="Food" kind="cream" />
+      <Btn href={site.orderUrl} label="Order online" kind="fire" ext />
+    </div>
+    <div class="tapa" aria-hidden="true"></div>
+  </section>
+
+  <section class="msec msec--drinks" id="drinks" aria-labelledby="drinks-title">
+    <div class="msec__grid">
+      <div class="msec__head">
+        <h2 id="drinks-title" class="display">Cocktails</h2>
+        <p>Skulls mark the strength. We make the syrups and mixers in-house.</p>
+        <figure class="msec__art"><Image quality={66} src={photo('menu-drinks')} alt="The printed Huli Huli cocktail menu, illustrated with tiki mugs, palms and an octopus" widths={[400, 700]} sizes="(max-width: 1023px) 80vw, 30vw" /></figure>
+      </div>
+      <div class="msec__lists">
+        <div class="mgroup">
+          <h3>Legends</h3>
+          <p>The classics, made the way their inventors wrote them.</p>
+          <ul class="mlist">
+            {legends.map((d) => (
+              <li>
+                <span class="mlist__name">{d.name} <span class="mlist__meta"><span class="mlist__origin">{d.origin}</span> <Skulls n={d.strength} /></span></span>
+                <span class="mlist__price">{d.price}</span>
+                <span class="mlist__spec">{d.spec}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3>Legacies</h3>
+          <p>Our own recipes, built on the old rules.</p>
+          <ul class="mlist">
+            {legacies.map((d) => (
+              <li>
+                <span class="mlist__name">{d.name} <Skulls n={d.strength} /></span>
+                <span class="mlist__price">{d.price}</span>
+                <span class="mlist__spec">{d.spec}</span>
+              </li>
+            ))}
+            <li>
+              <span class="mlist__name">Octoskull mug</span>
+              <span class="mlist__price">$45</span>
+              <span class="mlist__spec">Any drink served in the Huli Huli Octoskull, and the mug goes home with you.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="msec msec--food" id="food" aria-labelledby="food-title">
+    <div class="msec__grid">
+      <div class="msec__head">
+        <h2 id="food-title" class="display">Food</h2>
+        <p>Parties of six or more get an automatic 20% gratuity. Tell your server about any allergies.</p>
+        <figure class="msec__art"><Image quality={66} src={photo('menu-food')} alt="The printed Huli Huli food menu, illustrated with tiki carvings, a moai and a lava flow" widths={[400, 700]} sizes="(max-width: 1023px) 80vw, 30vw" /></figure>
+      </div>
+      <div class="msec__lists">
+        <div class="mgroup">
+          <h3>Starters</h3>
+          <ul class="mlist">
+            {starters.map((d) => (<li><span class="mlist__name">{d.name}</span><span class="mlist__price">{d.price}</span><span class="mlist__spec">{d.note}</span></li>))}
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3>Casual fare</h3>
+          <p>Sandwiches come with fries. Swap for Hawaiian mac or a side salad, $2.</p>
+          <ul class="mlist">
+            {casual.map((d) => (<li><span class="mlist__name">{d.name}</span><span class="mlist__price">{d.price}</span><span class="mlist__spec">{d.note}</span></li>))}
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3>Hawaiian plate</h3>
+          <p>{plate.note} Extra sauce 50 cents.</p>
+          <div class="plate">
+            <div><h4 class="label">Protein</h4><ul>{plate.proteins.map(([n, p]) => (<li><span>{n}</span><span>{p}</span></li>))}</ul></div>
+            <div><h4 class="label">Sauce, pick one</h4><ul>{plate.sauces.map((s) => (<li><span>{s}</span></li>))}</ul></div>
+          </div>
+        </div>
+        <p class="fine">Consuming raw or undercooked meats, poultry, seafood, shellfish or eggs may raise the risk of foodborne illness, especially with certain medical conditions.</p>
+        <div><Btn href={site.orderUrl} label="Order for pickup" kind="fire" ext /></div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,110 @@
+---
+import { u } from '../lib/url';
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/engine.css';
+import '../styles/site.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  page?: string;
+}
+const { title, description = site.description, image = u('/og.jpg'), page = 'home' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | Tiki bar in Powell, Ohio`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BarOrPub',
+  name: site.name,
+  url: site.url,
+  image: ogImage,
+  servesCuisine: ['Polynesian', 'Asian', 'American'],
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.zip,
+    addressCountry: 'US',
+  },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday'], opens: '16:30', closes: '21:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '16:30', closes: '23:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '13:00', closes: '23:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '13:00', closes: '20:00' },
+  ],
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: site.rating.score, reviewCount: site.rating.count },
+  sameAs: [site.instagram],
+};
+---
+<!doctype html>
+<html lang="en" transition:animate="none" data-page={page}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#125f6c" />
+    <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={u('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" href={u('/fonts/luckiest-guy-400-normal.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={u('/fonts/dm-sans-400-normal.woff2')} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+      // Loader guard: show it once per session. If the scripts are late (slow phone), CSS fades it
+      // out at 2.3 s on its own, so the hero is never held behind it.
+      try { if (sessionStorage.getItem('huli-seen')) document.documentElement.classList.add('no-loader'); sessionStorage.setItem('huli-seen', '1'); } catch (e) {}
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="curtain" transition:persist="curtain" aria-hidden="true">
+      <div class="curtain__panel"><img src={u('/logo.png')} alt="" width="600" height="163" /></div>
+    </div>
+    {page === 'home' && (
+      <div id="loader" aria-hidden="true">
+        <div class="loader__sun" data-loader-sun>
+          <p class="loader__label" data-loader-out>Huli Huli Tiki Lounge</p>
+          <svg class="loader__pine" data-loader-pine viewBox="10 6 46 52"><defs><clipPath id="pine-fill"><rect data-pine-level x="0" y="54" width="64" height="60" /></clipPath></defs><path d="M32 12c3 4 7 5 10 4-1 4-4 6-6 7 4 1 8 4 8 10 0 9-6 19-12 19S20 42 20 33c0-6 4-9 8-10-2-1-5-3-6-7 3 1 7 0 10-4z" transform="translate(3 3)" fill="#2b140b"/><path d="M32 12c3 4 7 5 10 4-1 4-4 6-6 7 4 1 8 4 8 10 0 9-6 19-12 19S20 42 20 33c0-6 4-9 8-10-2-1-5-3-6-7 3 1 7 0 10-4z" fill="#fff0d4"/><path d="M32 12c3 4 7 5 10 4-1 4-4 6-6 7 4 1 8 4 8 10 0 9-6 19-12 19S20 42 20 33c0-6 4-9 8-10-2-1-5-3-6-7 3 1 7 0 10-4z" fill="#f26a1b" clip-path="url(#pine-fill)"/><path d="M32 12c3 4 7 5 10 4-1 4-4 6-6 7 4 1 8 4 8 10 0 9-6 19-12 19S20 42 20 33c0-6 4-9 8-10-2-1-5-3-6-7 3 1 7 0 10-4z" fill="none" stroke="#2b140b" stroke-width="3" stroke-linejoin="round"/><path d="M25 32l14 10M39 32L25 42M32 26v22" stroke="#2b140b" stroke-width="2.4" stroke-linecap="round"/></svg>
+          <p class="loader__count" data-loader-out><span data-loader-count>000</span>%</p>
+          <p class="loader__hint" data-loader-out>Huli means turn</p>
+        </div>
+      </div>
+    )}
+    <Header page={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { start } from '../engine/astro';
+      import { setupMotion } from '../motion/setup';
+      start(setupMotion);
+    </script>
+  </body>
+</html>

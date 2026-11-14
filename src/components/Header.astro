@@ -1,0 +1,42 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+import Btn from './Btn.astro';
+const { page = 'home' } = Astro.props;
+const links = [
+  { href: u('/#drinks'), label: 'Drinks' },
+  { href: u('/menu/'), label: 'Menu', current: page === 'menu' },
+  { href: u('/#parties'), label: 'Parties' },
+  { href: u('/#catering'), label: 'Catering' },
+  { href: u('/#visit'), label: 'Visit' },
+];
+---
+<header class="site-header" data-header>
+  <div class="bar">
+    <a class="bar__logo" href={u('/')} aria-label="Huli Huli Tiki Lounge, home">
+      <img src={u('/logo.png')} alt="" width="600" height="163" />
+    </a>
+    <nav class="bar__nav" aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a class="draw" href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="bar__actions">
+      <Btn href={site.orderUrl} label="Order online" kind="cream" size="sm" ext />
+      <Btn href={u('/#reserve')} label="Reserve" kind="fire" size="sm" />
+    </div>
+    <button class="bar__menu" type="button" aria-expanded="false" aria-controls="menu-overlay" data-menu-toggle>
+      <span class="bar__menu-open">Menu</span><span class="bar__menu-close">Close</span>
+    </button>
+  </div>
+  <nav class="overlay" id="menu-overlay" aria-label="Mobile" hidden data-menu>
+    <ul>
+      {links.map((l) => (<li><a href={l.href} data-menu-link>{l.label}</a></li>))}
+      <li><a href={site.orderUrl} rel="noopener" data-menu-link>Order online</a></li>
+      <li><a href={u('/#reserve')} data-menu-link>Reserve a table</a></li>
+    </ul>
+    <p class="overlay__meta">{site.address.street}, {site.address.city}<br />Tue to Sun, closed Mondays</p>
+  </nav>
+</header>

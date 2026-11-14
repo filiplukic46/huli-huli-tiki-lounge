@@ -1,0 +1,10 @@
+---
+// Button with the site's "turn over" label: the label turns away and its copy turns up from below.
+interface Props { href: string; label: string; kind?: 'fire' | 'ink' | 'cream' | 'sun'; size?: 'sm' | 'md'; ext?: boolean; attrs?: Record<string, string> }
+const { href, label, kind = 'fire', size = 'md', ext = false, attrs = {} } = Astro.props;
+---
+<a class={`btn btn--${kind} btn--${size}`} href={href} rel={ext ? 'noopener' : undefined} {...attrs}>
+  <span class="btn__fill" aria-hidden="true"></span>
+  <span class="btn__label"><span class="btn__a">{label}</span><span class="btn__b" aria-hidden="true" data-label={label}></span></span>
+  <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>

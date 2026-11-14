@@ -1,0 +1,15 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import Btn from '../components/Btn.astro';
+---
+<Base page="404" title="Page not found" description="This page turned over and there is nothing on the back.">
+  <section class="lost" aria-labelledby="lost-title">
+    <div>
+      <div class="sway" data-sway><div class="lost__card" aria-hidden="true">?</div></div>
+      <h1 id="lost-title" data-split="lines" data-intro>This page turned over</h1>
+      <p>There is nothing on the back of this one. The drinks are still where you left them.</p>
+      <div data-reveal="up" data-intro data-delay="0.45"><Btn href={u('/')} label="Back to the bar" kind="sun" /></div>
+    </div>
+  </section>
+</Base>

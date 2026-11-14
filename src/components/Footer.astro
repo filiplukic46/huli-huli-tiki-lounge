@@ -1,0 +1,39 @@
+---
+import { u } from '../lib/url';
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="tapa tapa--ink-on-sunset" aria-hidden="true"></div>
+  <div class="footer__inner">
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h2 class="label">Find us</h2>
+        <p>{site.address.street}<br />{site.address.city}, Ohio {site.address.zip}</p>
+        <a class="link" href={site.mapUrl} rel="noopener">Get directions</a>
+      </div>
+      <div class="footer__col">
+        <h2 class="label">Hours</h2>
+        <ul class="footer__hours">
+          {site.hours.map((h) => (<li><span>{h.short}</span><span>{h.time}</span></li>))}
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2 class="label">Go</h2>
+        <ul class="footer__links">
+          <li><a class="draw" href={u('/menu/')}>Full menu</a></li>
+          <li><a class="draw" href={site.orderUrl} rel="noopener">Order online</a></li>
+          <li><a class="draw" href={u('/#reserve')}>Reserve a table</a></li>
+          <li><a class="draw" href={u('/#parties')}>Private parties</a></li>
+          <li><a class="draw" href={u('/#catering')}>Catering</a></li>
+          <li><a class="draw" href={site.instagram} rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer__name" aria-hidden="true"><span>Huli</span><span>Huli</span></p>
+    <div class="footer__legal">
+      <span>© {year} Huli Huli Tiki Lounge, Powell, Ohio</span>
+      <span>Menu art: Cocktails by Trader Nic</span>
+    </div>
+  </div>
+</footer>
